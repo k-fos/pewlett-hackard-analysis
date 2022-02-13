@@ -1,3 +1,4 @@
+
 --*****************************************
 --   Deliverable 1 Steps 1-7
 --*****************************************
@@ -43,6 +44,23 @@ FROM retirement_unique_title
 GROUP BY title
 ORDER BY COUNT(emp_no) DESC;
 
+--*****************************************
+--   Deliverable 2 Steps 1-11
+--*****************************************
 
+DROP TABLE IF EXISTS mentorship_eligibility;
 
-
+SELECT DISTINCT ON (emp_no) e.emp_no
+	,e.first_name
+	,e.last_name
+	,e.birth_date
+	,de.from_date
+	,de.to_date
+	,et.title
+INTO mentorship_eligibility
+FROM emp e
+  JOIN dept_emp de ON e.emp_no = de.emp_no
+  JOIN emp_title et ON e.emp_no = et.emp_no
+WHERE e.birth_date BETWEEN '1965-01-01' AND '1965-12-31'
+  AND de.to_date = '9999-01-01'
+ORDER BY e.emp_no;
